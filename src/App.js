@@ -26,7 +26,7 @@ export default function App() {
           <Link to='/user'>User list</Link>
           <Link to={'/user/' + id}>User id=1 detail</Link>
           <Link to='/form'>Blocking Form</Link>
-          <Link to='/hello?name=derek'>Query Paramter</Link>
+          <Link to='/hello?name=derek&age=18'>Query Paramter</Link>
         </nav>
         <Switch>
           {/* 根路由要添加exact，实现精确匹配 */}

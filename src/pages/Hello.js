@@ -1,34 +1,37 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import qs from 'qs';
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
 function useQuery() {
-  return new URLSearchParams(useLocation().search);
+  const queryParams = {};
+
+  const searchParams = new URLSearchParams(useLocation().search);
+
+  for (let key of searchParams.keys()) {
+    queryParams[key] = searchParams.get(key);
+  }
+
+  return queryParams;
 }
 
 export default ({ props }) => {
-  const query = useQuery();
+  // const queryParams = useQuery();
 
-  const queryParams = [];
-
-  for (let key of query.keys()) {
-    queryParams.push({ key, value: query.get(key) });
-  }
-
-  // cuseLocation();
-  // { pathname: "/hello", search: "?name=derek" , hash: "",   state: undefined }
+  const { search } = useLocation(); // {pathname: "/hello", search: "?name=derek", hash: "", state: undefined, key: "7k7zmd"}
+  const queryParams = qs.parse(search.slice(1));
 
   return (
-    <div>
-      This is to get query parameter
+    <>
+      <h2>This is to get query parameter</h2>
       <ul>
-        {queryParams.map((q, index) => (
+        {Object.keys(queryParams).map((k, index) => (
           <li key={index}>
-            {q.key} {q.value}
+            {k}: {queryParams[k]}
           </li>
         ))}
       </ul>
-    </div>
+    </>
   );
 };
