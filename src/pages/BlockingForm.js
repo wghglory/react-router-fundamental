@@ -8,29 +8,28 @@ import React, { useState } from 'react';
 import { Prompt } from 'react-router-dom';
 
 export default function BlockingForm() {
-  let [isBlocking, setIsBlocking] = useState(false);
+  let [blocking, setBlocking] = useState(false);
 
   return (
     <form
-      onSubmit={event => {
+      onSubmit={(event) => {
         event.preventDefault();
         event.target.reset();
-        setIsBlocking(false);
+        setBlocking(false);
       }}
     >
-      <Prompt
-        when={isBlocking}
-        message={location => `Are you sure you want to go to ${location.pathname}`}
-      />
+      <Prompt when={blocking} message={(location) => `Are you sure you want to go to ${location.pathname}`} />
 
-      <p>Blocking? {isBlocking ? 'Yes, click a link or the back button' : 'Nope'}</p>
+      <p>
+        {blocking ? 'You typed something, alert will show if you navigate away' : 'You are free to go to other tabs'}
+      </p>
 
       <p>
         <input
-          size="50"
-          placeholder="type something to block transitions"
-          onChange={event => {
-            setIsBlocking(event.target.value.length > 0);
+          size='50'
+          placeholder='type something to block transitions'
+          onChange={(event) => {
+            setBlocking(event.target.value.length > 0);
           }}
         />
       </p>
