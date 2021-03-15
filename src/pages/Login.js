@@ -3,8 +3,12 @@ import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import { login } from '../store';
+import { loginAction } from '../store';
 
+/**
+ * if user never login, display login page, login button triggers login action
+ * read isAuthenticated from store, and redirect to previous url
+ */
 function Login({ location, isAuthenticated, login }) {
   const redirect = (location.state && location.state.redirect) || '/'; // redirect address
 
@@ -24,10 +28,10 @@ function Login({ location, isAuthenticated, login }) {
 }
 
 export default connect(
-  state => ({ isAuthenticated: state.loginState.isAuthenticated }),
-  dispatch => ({
+  (state) => ({ isAuthenticated: state.login.isAuthenticated }),
+  (dispatch) => ({
     login: () => {
-      dispatch(login());
-    }
-  })
+      dispatch(loginAction());
+    },
+  }),
 )(Login);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-export function UserList({ logout }) {
+function UserList({ logout }) {
   return (
     <div>
       <h2>User List</h2>
@@ -11,19 +11,10 @@ export function UserList({ logout }) {
   );
 }
 
-export const logout = () => dispatch => {
-  setTimeout(() => {
-    dispatch({ type: 'loginFailure' });
-  }, 1000);
-};
-
 function mapDispatchToProps(dispatch) {
   return {
-    logout: () => dispatch({ type: 'loginFailure' })
+    logout: () => dispatch({ type: 'logout' }),
   };
 }
 
-export default connect(
-  state => state,
-  mapDispatchToProps
-)(UserList);
+export default connect((state) => state, mapDispatchToProps)(UserList);

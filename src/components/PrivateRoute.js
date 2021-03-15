@@ -3,6 +3,9 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
+/**
+ * get isAuthenticated from redux store, and then render login or component.
+ */
 function PrivateRoute({ component: Cmp, isAuthenticated, ...rest }) {
   console.log(rest); // path, location, computedMatch...
   console.log(isAuthenticated);
@@ -10,14 +13,14 @@ function PrivateRoute({ component: Cmp, isAuthenticated, ...rest }) {
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         isAuthenticated ? (
           <Cmp {...props} /> // ...props is must since Cmp can use location, match, etc
         ) : (
           <Redirect
             to={{
               pathname: '/login',
-              state: { redirect: props.location.pathname }
+              state: { redirect: props.location.pathname },
             }}
           />
         )
@@ -26,6 +29,6 @@ function PrivateRoute({ component: Cmp, isAuthenticated, ...rest }) {
   );
 }
 
-export default connect(state => {
-  return { isAuthenticated: state.loginState.isAuthenticated };
+export default connect((state) => {
+  return { isAuthenticated: state.login.isAuthenticated };
 })(PrivateRoute);
